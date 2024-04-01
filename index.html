@@ -16,12 +16,11 @@
     <div id="restartBtnComponent" class="container text-center mt-4">
         <button id="addExerciseBtn">Add Exercise</button><br>
         <button id="resetBtn">Reset</button><br>
-        <button id="hideShowBtn">Hide</button><br>
     </div>
-    <div class="container">
+    <div id="exerciseInputComponent" class="container">
         <div class="row justify-content-center">
             <div class="col-auto">
-                <div id="exerciseInputComponent" class="container text-center mt-3">
+                <div class="container text-center mt-3">
                     <label class="form-label">Exercise Name</label>
                     <input id="exerciseNameInput" class="form-control text-center" type="text" placeholder="Exercise Name..."><br>
                     <label class="form-label">Machine Type</label>
@@ -36,8 +35,39 @@
                     <input id="repetitionInput" class="form-control text-center" inputmode="numeric" type="number" placeholder="Repetitions..." min="0"><br>
                     <label class="form-label">Weight</label>
                     <input id="weightInput" class="form-control text-center" type="number" placeholder="Lib..." min="0"><br>
-                    <button id="addToListBtn">Add To List</button><br>
+                    <button id="addToListBtn">Add To List</button>
+                </div>
             </div>
+        </div>
+    </div>
+    <button id="hideShowBtn" class="mt-2">Hide Form</button>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <button id="showTimerBtn" class="mt-2">Edit Timer</button>
+                <div id="restTimerFormComponent">
+                    <h1 id="title">Add Time To Rest</h1>
+                    <label class="form-label">Minutes</label><br>
+                    <input id="minutes" class="form-control" type="number" placeholder="how many minutes..."><br>
+                    <label class="form-label">Seconds</label><br>
+                    <input id="seconds" class="form-control" type="number" placeholder="how many seconds..."><br>
+                    <button id="addTimeBtn">Add Time</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <div id="restTimerComponent" class="mx-auto">
+                    <h1 id="title">Rest Timer</h1>
+                    <h4 id="timerText"><span>1 minute </span><span>40 seconds </span></h4>
+                    <svg width="200" height="200" class="mx-auto d-block">
+                        <circle id="timerCircle" cx="100" cy="100" r="80" stroke="#00ADB5" stroke-width="10" fill="" />
+                        <text id="svgTimerText" x="50%" y="50%" text-anchor="middle" stroke="#51c5cf" stroke-width="1px" dy=".3em"></text>
+                    </svg>
+                    <button id="startTimerBtn" class="mt-2">Start Timer</button>
+                </div>
             </div>
         </div>
     </div>

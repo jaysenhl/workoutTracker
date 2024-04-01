@@ -2,6 +2,8 @@
 const restartBtnComponent = document.getElementById('restartBtnComponent')
 const exerciseInputComponent = document.getElementById('exerciseInputComponent')
 const exerciseListComponent = document.getElementById('exerciseListComponent')
+const restTimerFormComponent = document.getElementById('restTimerFormComponent')
+const restTimerComponent = document.getElementById('restTimerComponent')
 
 //Buttons
 const addExerciseBtn = document.getElementById('addExerciseBtn')
@@ -10,6 +12,9 @@ const addToListBtn = document.getElementById('addToListBtn')
 const completedBtn = document.getElementById('completedBtn')
 const deleteBtn = document.getElementById('deleteBtn')
 const hideShowBtn = document.getElementById('hideShowBtn')
+const showTimerBtn = document.getElementById('showTimerBtn')
+const addTimeBtn = document.getElementById('addTimeBtn')
+const startTimerBtn = document.getElementById('startTimerBtn')
 
 // Inputs
 const exerciseNameInput = document.getElementById('exerciseNameInput')
@@ -19,6 +24,11 @@ const weightInput = document.getElementById('weightInput')
 
 exerciseInputComponent.style.display = 'none'
 hideShowBtn.style.visibility = 'hidden'
+restTimerFormComponent.style.display = 'none'
+restTimerComponent.style.display = 'none'
+
+let totalTimeSeconds = 0;
+let initialTime = 0;
 
 addExerciseBtn.addEventListener('click',()=>{
     exerciseInputComponent.style.display = 'block'
@@ -29,22 +39,82 @@ addExerciseBtn.addEventListener('click',()=>{
 hideShowBtn.addEventListener('click',()=>{
     if(exerciseInputComponent.style.display === 'none' || exerciseInputComponent.style.display === ''){
         exerciseInputComponent.style.display = 'block'
-        hideShowBtn.textContent = 'Hide'; 
+        hideShowBtn.textContent = 'Hide Form'; 
     }else{
         exerciseInputComponent.style.display = 'none'
-        hideShowBtn.textContent = 'Show'; 
+        hideShowBtn.textContent = 'Show Form'; 
 
     }
 })
 
 resetBtn.addEventListener('click',()=> location.reload())
 
+showTimerBtn.addEventListener('click',()=>{
+    if(restTimerFormComponent.style.display === 'none' || restTimerFormComponent.style.display === ''){
+        restTimerFormComponent.style.display = 'block'
+        showTimerBtn.textContent = 'Hide Timer'; 
+    }else{
+        restTimerFormComponent.style.display = 'none'
+        showTimerBtn.textContent = 'Edit Timer'; 
+
+    }
+})
+
+addTimeBtn.addEventListener('click', () => {
+    const minutes = parseInt(document.getElementById('minutes').value) || 0;
+    const seconds = parseInt(document.getElementById('seconds').value) || 0;
+    totalTimeSeconds = minutes * 60 + seconds;
+    initialTime = totalTimeSeconds;  // Almacenar el tiempo total
+    showTimerBtn.textContent = 'Edit Timer'; 
+
+    restTimerFormComponent.style.display = 'none';
+    restTimerComponent.style.display = 'block';
+    document.getElementById('timerText').textContent = `${minutes} minute ${seconds} seconds `;
+});
+
+function setProgress(percent) {
+    const circle = document.getElementById('timerCircle');
+    const radius = circle.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+    const offset = ((100 - percent) / 100) * circumference;
+
+    circle.style.strokeDasharray = `${circumference}`;
+    circle.style.strokeDashoffset = offset;
+
+    // Actualiza el texto dentro del círculo SVG
+    const svgTimerText = document.getElementById('svgTimerText');
+    const minutes = Math.floor(totalTimeSeconds / 60);
+    const seconds = totalTimeSeconds % 60;
+    svgTimerText.textContent = `${minutes}:${seconds}`;
+}
+
+startTimerBtn.addEventListener('click', () => {
+    totalTimeSeconds = initialTime;  // Reiniciar a tiempo total al comenzar
+
+    clearInterval(window.timerInterval);
+
+    window.timerInterval = setInterval(() => {
+        if (totalTimeSeconds <= 0) {
+            clearInterval(window.timerInterval);
+            document.getElementById('svgTimerText').textContent = "Time's up!";
+            return;
+        }
+
+        totalTimeSeconds -= 1;
+        const minutes = Math.floor(totalTimeSeconds / 60);
+        const seconds = totalTimeSeconds % 60;
+        document.getElementById('svgTimerText').textContent = `${minutes} minute(s) ${seconds} second(s)`;
+
+        const percent = (totalTimeSeconds / initialTime) * 100;
+        setProgress(percent);
+    }, 1000);
+});
 
 // Initialize exercise count and table
 let exerciseCount = 0;
 let tableComponent = document.createElement('table');
 tableComponent.setAttribute('id', 'exerciseListTable');
-tableComponent.classList.add('table', 'table-dark', 'table-borderless', 'align-middle')
+tableComponent.classList.add('table', 'table-dark', 'align-middle')
 tableComponent.style.display = 'none'
 const thead = document.createElement('thead');
 thead.classList.add('table-light');
@@ -56,6 +126,7 @@ details.forEach(detail => {
     th.textContent = detail;
     trowDetails.appendChild(th);
 });
+
 thead.appendChild(trowDetails);
 tableComponent.appendChild(thead);
 exerciseListComponent.appendChild(tableComponent);
@@ -68,17 +139,26 @@ addToListBtn.addEventListener('click', () => {
     const repetitions = repetitionInput.value;
     const weight = weightInput.value;
 
-    exerciseCount++;
+    if (tableComponent.rows.length <= 1) {
+        exerciseCount = 0;
+    }
 
-    addToRows(tableComponent,exerciseCount,exercise,machineType,repetitions,weight)
+    exerciseCount = tableComponent.rows.length - 1;
 
+    addToRows(tableComponent,exerciseCount + 1,exercise,machineType,repetitions,weight)
+    renumberRows()
 });
 
 // Event delegation for the delete button
 exerciseListComponent.addEventListener('click', (event) => {
-    if (event.target.classList.contains('deleteBtn')) {
+    if (event.target.classList.contains('fa-trash-can')) {
         const row = event.target.closest('tr');
         row.remove();
+        renumberRows(); // Renumerar las filas después de eliminar una
+        
+        if (tableComponent.rows.length <= 1) {
+            exerciseCount = 0;
+        }
     }
 });
 
@@ -101,8 +181,8 @@ function addToRows(table,exerCount,exer,machine,reps,weig){
         <td>${exer}</td>
         <td>${machine}</td>
         <td>${reps}</td>
-        <td>${weig}</td>
-        <td><button id="completedBtn" class="completedBtn">Complete<i class="fa-regular fa-circle-check"></i></button></td>
+        <td>${weig} Lib</td>
+        <td><button id="completedBtn" class="completedBtn">Complete <i class="fa-regular fa-circle-check"></i></button></td>
         <td>0</td>
         <td>0</td>
         <td><button id="deleteBtn" class="deleteBtn"><i class="fa-regular fa-trash-can"></i></button></td>
@@ -113,4 +193,13 @@ function addToRows(table,exerCount,exer,machine,reps,weig){
     repetitionInput.value = '';
     weightInput.value = '';
 }
+
+function renumberRows() {
+    const rows = tableComponent.rows;
+    // Comienza en 1 para saltar la fila del encabezado de la tabla
+    for (let i = 1; i < rows.length; i++) {
+        rows[i].cells[0].textContent = i;
+    }
+}
+
 

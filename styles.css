@@ -15,6 +15,12 @@ body {
     background-color: #393E46;
 }
 
+td {
+    font-family: "Permanent Marker", cursive;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
 #title {
     color: #00ADB5;
     font-family: "Permanent Marker", cursive;
@@ -33,13 +39,17 @@ body {
         text-shadow: 0 0 5px #fff, 0 0 5px #00ADB5, 0 0 15px #fff, 0 0 20px #00ADB5;
     }
 }
+#timerText,
 #title{
     animation: glow-animation 2s infinite alternate;
 }
 
+#startTimerBtn,
+#showTimerBtn,
+#addTimeBtn,
 #completedBtn,
 #addExerciseBtn,
-#hideBtn, 
+#hideShowBtn, 
 #addToListBtn {
     background-color: #222831;
     padding: 10px;
@@ -56,19 +66,10 @@ body {
     margin-top: 10px;
 }
 
-#hideShowBtn {
-    background-color: #ddff32fc;
-    padding: 10px;
-    color: #000000;
-    border-radius: 10px;
-    margin-top: 10px;
-}
-
-#hideShowBtn:hover{
-    color: #00ADB5;
-    box-shadow: 2px 2px 10px;
-}
-
+#startTimerBtn:hover,
+#showTimerBtn:hover,
+#hideShowBtn:hover,
+#addTimeBtn:hover,
 #addExerciseBtn:hover {
     color: white;
     box-shadow: 2px 2px 10px;
@@ -90,7 +91,7 @@ body {
 }
 
 label {
-    color: white;
+    color: #00ADB5;
 }
 
 .trashbtn {
@@ -101,4 +102,29 @@ label {
 table {
     background-color: #393E46;
     margin-top: 25px;
+}
+
+input,select {
+    box-shadow: 10px 10px 10px;
+}
+
+#timerComponent {
+    height: 200px;
+    width: 200px;
+    background-color: #00ADB5;
+    border-radius: 100px;
+    box-shadow: 10px 10px 10px;
+}
+
+
+#svgTimerText {
+    font-size: 2rem;
+    color: #00ADB5;
+    font-family: "Permanent Marker", cursive;
+
+}
+
+#timerCircle {
+    filter: drop-shadow(5px 5px 5px rgba(46, 217, 217, 0.5));
+
 }
