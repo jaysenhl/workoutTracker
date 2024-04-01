@@ -23,7 +23,7 @@ const repetitionInput = document.getElementById('repetitionInput')
 const weightInput = document.getElementById('weightInput')
 
 exerciseInputComponent.style.display = 'none'
-hideShowBtn.style.visibility = 'hidden'
+hideShowBtn.style.display = 'none'
 restTimerFormComponent.style.display = 'none'
 restTimerComponent.style.display = 'none'
 
@@ -36,7 +36,7 @@ alarmSound.preload = 'auto';
 addExerciseBtn.addEventListener('click',()=>{
     exerciseInputComponent.style.display = 'block'
     addExerciseBtn.style.display = 'none'
-    hideShowBtn.style.visibility = 'visible'
+    hideShowBtn.style.display = 'block'
 })
 
 hideShowBtn.addEventListener('click',()=>{
