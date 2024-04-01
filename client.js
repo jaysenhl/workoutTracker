@@ -31,6 +31,7 @@ let totalTimeSeconds = 0;
 let initialTime = 0;
 
 const alarmSound = new Audio('alarm.mp3')
+alarmSound.preload = 'auto';
 
 addExerciseBtn.addEventListener('click',()=>{
     exerciseInputComponent.style.display = 'block'
