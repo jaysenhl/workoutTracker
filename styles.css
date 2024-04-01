@@ -56,6 +56,19 @@ body {
     margin-top: 10px;
 }
 
+#hideShowBtn {
+    background-color: #ddff32fc;
+    padding: 10px;
+    color: #000000;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+#hideShowBtn:hover{
+    color: #00ADB5;
+    box-shadow: 2px 2px 10px;
+}
+
 #addExerciseBtn:hover {
     color: white;
     box-shadow: 2px 2px 10px;

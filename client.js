@@ -9,6 +9,7 @@ const resetBtn = document.getElementById('resetBtn')
 const addToListBtn = document.getElementById('addToListBtn')
 const completedBtn = document.getElementById('completedBtn')
 const deleteBtn = document.getElementById('deleteBtn')
+const hideShowBtn = document.getElementById('hideShowBtn')
 
 // Inputs
 const exerciseNameInput = document.getElementById('exerciseNameInput')
@@ -17,12 +18,27 @@ const repetitionInput = document.getElementById('repetitionInput')
 const weightInput = document.getElementById('weightInput')
 
 exerciseInputComponent.style.display = 'none'
+hideShowBtn.style.visibility = 'hidden'
 
 addExerciseBtn.addEventListener('click',()=>{
     exerciseInputComponent.style.display = 'block'
+    addExerciseBtn.style.display = 'none'
+    hideShowBtn.style.visibility = 'visible'
+})
+
+hideShowBtn.addEventListener('click',()=>{
+    if(exerciseInputComponent.style.display === 'none' || exerciseInputComponent.style.display === ''){
+        exerciseInputComponent.style.display = 'block'
+        hideShowBtn.textContent = 'Hide'; 
+    }else{
+        exerciseInputComponent.style.display = 'none'
+        hideShowBtn.textContent = 'Show'; 
+
+    }
 })
 
 resetBtn.addEventListener('click',()=> location.reload())
+
 
 // Initialize exercise count and table
 let exerciseCount = 0;
@@ -33,7 +49,7 @@ tableComponent.style.display = 'none'
 const thead = document.createElement('thead');
 thead.classList.add('table-light');
 const trowDetails = document.createElement('tr');
-const details = ['#', "Exercise", 'Type', 'Repetitions', 'Weight', 'Complete', 'Total Sets', 'Total Reps', 'Delete'];
+const details = ['#', "Exercise", 'Type', 'Repetitions', 'Weight', 'Complete A Set', 'Total Sets', 'Total Reps', 'Delete'];
 details.forEach(detail => {
     const th = document.createElement('th');
     th.classList.add('table-dark')
@@ -86,10 +102,10 @@ function addToRows(table,exerCount,exer,machine,reps,weig){
         <td>${machine}</td>
         <td>${reps}</td>
         <td>${weig}</td>
-        <td><button id="completedBtn" class="completedBtn">Completed</button></td>
+        <td><button id="completedBtn" class="completedBtn">Complete<i class="fa-regular fa-circle-check"></i></button></td>
         <td>0</td>
-        <td>${reps}</td>
-        <td><button id="deleteBtn" class="deleteBtn">Delete</button></td>
+        <td>0</td>
+        <td><button id="deleteBtn" class="deleteBtn"><i class="fa-regular fa-trash-can"></i></button></td>
     `;
 
     exerciseNameInput.value = '';
