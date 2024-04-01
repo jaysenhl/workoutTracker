@@ -30,6 +30,8 @@ restTimerComponent.style.display = 'none'
 let totalTimeSeconds = 0;
 let initialTime = 0;
 
+const alarmSound = new Audio('alarm.mp3')
+
 addExerciseBtn.addEventListener('click',()=>{
     exerciseInputComponent.style.display = 'block'
     addExerciseBtn.style.display = 'none'
@@ -39,11 +41,12 @@ addExerciseBtn.addEventListener('click',()=>{
 hideShowBtn.addEventListener('click',()=>{
     if(exerciseInputComponent.style.display === 'none' || exerciseInputComponent.style.display === ''){
         exerciseInputComponent.style.display = 'block'
-        hideShowBtn.textContent = 'Hide Form'; 
+        //hideShowBtn.textContent = 'Hide Form'; 
+        hideShowBtn.innerHTML = 'Hide Form <i class="fa-solid fa-eye-slash"></i>'
     }else{
         exerciseInputComponent.style.display = 'none'
         hideShowBtn.textContent = 'Show Form'; 
-
+        hideShowBtn.innerHTML = 'Show Form <i class="fa-solid fa-eye"></i>'
     }
 })
 
@@ -52,10 +55,12 @@ resetBtn.addEventListener('click',()=> location.reload())
 showTimerBtn.addEventListener('click',()=>{
     if(restTimerFormComponent.style.display === 'none' || restTimerFormComponent.style.display === ''){
         restTimerFormComponent.style.display = 'block'
-        showTimerBtn.textContent = 'Hide Timer'; 
+       // showTimerBtn.textContent = 'Hide Timer'; 
+        showTimerBtn.innerHTML = 'Hide Timer <i class="fa-solid fa-stopwatch-20"></i>'
     }else{
         restTimerFormComponent.style.display = 'none'
-        showTimerBtn.textContent = 'Edit Timer'; 
+       // showTimerBtn.textContent = 'Edit Timer'; 
+       showTimerBtn.innerHTML = 'Edit Timer <i class="fa-solid fa-stopwatch-20"></i>'
 
     }
 })
@@ -97,6 +102,13 @@ startTimerBtn.addEventListener('click', () => {
         if (totalTimeSeconds <= 0) {
             clearInterval(window.timerInterval);
             document.getElementById('svgTimerText').textContent = "Time's up!";
+            Swal.fire({
+                title: "Time's Up!",
+                text: "Rest Time is Finished!",
+                icon: "success"
+              });
+
+            alarmSound.play()
             return;
         }
 
@@ -201,5 +213,4 @@ function renumberRows() {
         rows[i].cells[0].textContent = i;
     }
 }
-
 
