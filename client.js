@@ -142,6 +142,14 @@ details.forEach(detail => {
 
 thead.appendChild(trowDetails);
 tableComponent.appendChild(thead);
+//add date here
+let today = new Date()
+let dd = today.getDate()
+let mm = today.getMonth()
+let yy = today.getFullYear()
+let dateComponent = document.getElementById('todaysDate')
+dateComponent.textContent = `Today: ${mm} - ${dd} - ${yy}`
+
 exerciseListComponent.appendChild(tableComponent);
 
 // Add exercises to the list

@@ -21,6 +21,7 @@ td {
     text-align: center;
 }
 
+.title,
 #title {
     color: #00ADB5;
     font-family: "Permanent Marker", cursive;
@@ -39,7 +40,11 @@ td {
         text-shadow: 0 0 5px #fff, 0 0 5px #00ADB5, 0 0 15px #fff, 0 0 20px #00ADB5;
     }
 }
-#timerText,
+
+h2 {
+    margin: 0;
+}
+
 #title{
     animation: glow-animation 2s infinite alternate;
 }
@@ -101,7 +106,6 @@ label {
 
 table {
     background-color: #393E46;
-    margin-top: 25px;
 }
 
 input,select {
