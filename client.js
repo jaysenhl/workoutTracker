@@ -33,8 +33,13 @@ let initialTime = 0;
 const alarmSound = new Audio('alarm.mp3')
 alarmSound.preload = 'auto';
 
+// GSAP
+gsap.from('.mainTitle',{opacity:0,y:100, duration:3, ease:"power2.out"})
+
+
 addExerciseBtn.addEventListener('click',()=>{
     exerciseInputComponent.style.display = 'block'
+    gsap.from('#exerciseInputComponent',{ y:500,duration: .5, ease:"power1"})
     addExerciseBtn.style.display = 'none'
     hideShowBtn.style.display = 'block'
 })
@@ -42,6 +47,7 @@ addExerciseBtn.addEventListener('click',()=>{
 hideShowBtn.addEventListener('click',()=>{
     if(exerciseInputComponent.style.display === 'none' || exerciseInputComponent.style.display === ''){
         exerciseInputComponent.style.display = 'block'
+        gsap.from('#exerciseInputComponent',{ y:500,duration: .5, ease:"power1"})
         //hideShowBtn.textContent = 'Hide Form'; 
         hideShowBtn.innerHTML = 'Hide Form <i class="fa-solid fa-eye-slash"></i>'
     }else{

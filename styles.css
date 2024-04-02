@@ -21,7 +21,7 @@ td {
     text-align: center;
 }
 
-.title,
+.dateTitle,
 #title {
     color: #00ADB5;
     font-family: "Permanent Marker", cursive;
@@ -45,6 +45,7 @@ h2 {
     margin: 0;
 }
 
+.dateTitle,
 #title{
     animation: glow-animation 2s infinite alternate;
 }
